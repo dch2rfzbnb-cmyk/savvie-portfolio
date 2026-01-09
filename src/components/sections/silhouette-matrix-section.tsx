@@ -66,11 +66,11 @@ export default function SilhouetteMatrixSection() {
     const opacity = isMasked ? 0.9 : 0.3;
 
     let lastTime = 0;
-    // Ускорение для маскированного слоя: уменьшаем интервал между кадрами в 15 раз
-    const speed = isMasked ? 3 : 30; // Было 50, стало 3 для маскированного (в ~16 раз быстрее)
+    // Дополнительное ускорение для маскированного слоя: уменьшаем интервал между кадрами ещё в 3 раза
+    const speed = isMasked ? 1 : 30; // Было 3, стало 1 для маскированного (ещё в 3 раза быстрее)
     const startTime = Date.now();
-    // Ускорение заполнения: уменьшаем время заполнения в 20 раз
-    const fillDuration = isMasked ? 600 : 12000; // Было 12000, стало 600 для маскированного (в 20 раз быстрее)
+    // Дополнительное ускорение заполнения: уменьшаем время заполнения ещё в 6 раз
+    const fillDuration = isMasked ? 100 : 12000; // Было 600, стало 100 для маскированного (ещё в 6 раз быстрее)
     let isFilled = false;
 
     const draw = (timestamp: number) => {
@@ -88,7 +88,7 @@ export default function SilhouetteMatrixSection() {
         ctx.font = '15px monospace';
 
         // Ускорение спавна: увеличиваем частоту появления символов для маскированного слоя
-        const spawnChance = isMasked ? (isFilled ? 0.05 : 1.0) : 1.0; // Было 0.3, стало 1.0 (все колонки активны)
+        const spawnChance = isMasked ? (isFilled ? 0.05 : 1.0) : 1.0; // Все колонки активны до заполнения
 
         for (let i = 0; i < drops.length; i++) {
           // Для маскированного слоя пропускаем некоторые колонки только после заполнения
@@ -98,8 +98,8 @@ export default function SilhouetteMatrixSection() {
 
           const text = characters.charAt(Math.floor(Math.random() * characters.length));
           const x = i * 20;
-          // Ускорение падения: увеличиваем шаг смещения для маскированного слоя
-          const dropStep = isMasked ? 2 : 1; // Было 1, стало 2 (в 2 раза быстрее падение)
+          // Дополнительное ускорение падения: увеличиваем шаг смещения ещё в 5 раз
+          const dropStep = isMasked ? 10 : 1; // Было 2, стало 10 для маскированного (ещё в 5 раз быстрее)
           const y = drops[i] * 20;
 
           ctx.fillStyle = isMasked ? baseColor : `rgba(22, 163, 74, ${opacity})`;
@@ -113,16 +113,16 @@ export default function SilhouetteMatrixSection() {
             }
             drops[i]++;
           } else {
-            // Для маскированного - символы падают быстрее и остаются на canvas
+            // Для маскированного - символы падают очень быстро и остаются на canvas
             if (drops[i] * 20 > canvas.height) {
               // После достижения низа, сбрасываем в начало для нового цикла
               if (Math.random() > 0.98) {
                 drops[i] = 0;
               } else {
-                drops[i] += dropStep; // Ускоренное падение
+                drops[i] += dropStep; // Очень быстрое падение
               }
             } else {
-              drops[i] += dropStep; // Ускоренное падение
+              drops[i] += dropStep; // Очень быстрое падение
             }
           }
         }
