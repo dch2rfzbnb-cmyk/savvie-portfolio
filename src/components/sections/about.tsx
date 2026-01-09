@@ -1,26 +1,24 @@
-import { about } from '@/lib/data';
 import { FadeIn } from '../fade-in';
-import { Badge } from '@/components/ui/badge';
+import { AboutTerminal } from '../about-terminal';
+
+const aboutText = `Давным давно, в период позднего мезозоя, я начал заниматься вайб‑кодингом, ещё до того как это стало мейнстримом. Тогда нейросети были очень медленными, и чтобы найти какую‑то истину, я заходил на sql.ru и cyberforum.ru и задавал свой вопрос: примерно через неделю ~~успевал состариться и~~ получал ответ, после чего продолжал свою разработку.
+
+Много лет спустя мне в руки попала книга ~~«Альманах с результатами всех матчей»~~ Аймена Эль Амри «OpenAI GPT for Python Developers», и я, один во вселенной, не зная кода, начал создавать и запускать, пока не понимая, что именно делаю, разные файлы и скрипты. Дальше мне посоветовали Stepik.ru, где я уже выучил Python, основы ML и на тетрадном листочке решал задачи по нейросетям.
+
+Получив четыре сертификата, я продолжал свой путь, пробовал разные ИИ, разные подходы, методы промптинга — и тут меня осенило: зачем читать книгу целиком, если можно обучить по ней ИИ‑модель, и она будет мне подсказывать? Так я придумал метапромпт‑бота. Потом наткнулся на Cursor IDE — и понял, вот ~~она, рыба моей мечты~~ то, что я так долго искал.
+
+После нескольких недель проб и ошибок я нашёл к нему идеальный подход и начал автоматизировать всё, что попадалось под руку. И вот я здесь: деплою свой лендинг в стиле матрицы и пишу этот текст =)`;
 
 export default function About() {
   return (
     <section id="about" className="w-full py-10 md:py-16">
-      <div className="mx-auto max-w-5xl px-4 py-6 bg-black/40 backdrop-blur-md rounded-2xl border border-primary/10 shadow-lg">
-        <div className="grid gap-10 md:grid-cols-2 items-center">
-          <FadeIn>
-            <div className="space-y-4">
-              <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">{about.title}</h2>
-              <div className="space-y-3 text-muted-foreground md:text-lg">
-                {about.description.map((p, i) => <p key={i}>{p}</p>)}
-              </div>
-            </div>
-          </FadeIn>
-          <FadeIn delay={200}>
-             <Badge variant="outline" className="text-base md:text-lg p-4 border-accent/50 text-accent-foreground bg-accent/10 w-full text-left leading-relaxed">
-               &quot;{about.quote}&quot;
-            </Badge>
-          </FadeIn>
-        </div>
+      <div className="mx-auto max-w-5xl px-4 py-6">
+        <FadeIn>
+          <h2 className="font-headline text-3xl font-bold tracking-tight text-center sm:text-4xl mb-8 md:mb-12">Обо мне</h2>
+        </FadeIn>
+        <FadeIn delay={200}>
+          <AboutTerminal text={aboutText} typingSpeed={30} />
+        </FadeIn>
       </div>
     </section>
   );
