@@ -22,12 +22,12 @@ export default function Projects() {
                   <CardTitle className={`flex items-center gap-1 sm:gap-2 font-mono ${project.title === 'contact' ? 'text-xs sm:text-sm md:text-lg' : 'text-sm sm:text-base md:text-lg'}`}>
                     {project.title}
                   </CardTitle>
-                  <CardDescription className={`${project.title === 'contact' ? 'text-[10px] sm:text-xs md:text-base mt-0.5 sm:mt-1 md:mt-2 whitespace-pre-line' : 'text-xs sm:text-sm md:text-base mt-1 sm:mt-2'} ${project.title === 'this-landing' ? 'hidden md:block' : ''}`}>
+                  <CardDescription className={`${project.title === 'contact' ? 'text-[10px] sm:text-xs md:text-base mt-0.5 sm:mt-1 md:mt-2 whitespace-pre-line' : 'text-xs sm:text-sm md:text-base mt-1 sm:mt-2'}`}>
                     {project.description}
                   </CardDescription>
                 </CardHeader>
                 {project.tags.length > 0 && (
-                  <div className={`px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-0 flex-grow ${project.title === 'this-landing' ? 'hidden md:block' : ''}`}>
+                  <div className="px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-0 flex-grow">
                     <div className="flex flex-wrap gap-1 sm:gap-2">
                       {project.tags.map((tag) => (
                         <Badge key={tag} variant="secondary" className="font-mono bg-primary/10 text-primary border-primary/20 text-[10px] sm:text-xs md:text-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1">
