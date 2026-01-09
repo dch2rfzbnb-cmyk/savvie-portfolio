@@ -39,17 +39,17 @@ export default function Projects() {
                 )}
                 <CardFooter className={`${project.title === 'contact' ? 'p-2 sm:p-3 md:p-6 pt-0' : 'p-3 sm:p-4 md:p-6 pt-0'}`}>
                   {project.url && (
-                     <Button asChild variant="ghost" size="sm" className="text-primary md:hover:bg-primary/10 h-8 sm:h-9 md:h-10 text-xs sm:text-sm md:text-base">
-                       <Link href={project.url} target={project.url.startsWith('/') ? '_self' : '_blank'} rel="noopener noreferrer">
+                     <Button asChild variant="ghost" size="sm" className="text-primary md:hover:bg-primary/10 h-7 sm:h-8 md:h-10 text-[10px] sm:text-xs md:text-base w-full justify-center md:justify-start">
+                       <Link href={project.url} target={project.url.startsWith('/') ? '_self' : '_blank'} rel="noopener noreferrer" className="flex items-center gap-1 md:gap-2">
                          {project.url.startsWith('https://t.me') ? (
                            <>
-                             <Send className="mr-2 h-4 w-4" />
-                             Открыть в Telegram
+                             <Send className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
+                             <span className="whitespace-nowrap">Перейти</span>
                            </>
                          ) : (
                            <>
-                             <LinkIcon className="mr-2 h-4 w-4" />
-                             Перейти
+                             <LinkIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 flex-shrink-0" />
+                             <span className="whitespace-nowrap">Перейти</span>
                            </>
                          )}
                        </Link>
