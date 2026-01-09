@@ -9,6 +9,7 @@ import Skills from '@/components/sections/skills';
 import Projects from '@/components/sections/projects';
 import Stack from '@/components/sections/stack';
 import Contact from '@/components/sections/contact';
+import SilhouetteMatrixSection from '@/components/sections/silhouette-matrix-section';
 import type { SectionId } from '@/lib/types';
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
         </div>
       </main>
       <Footer />
+      <SilhouetteMatrixSection />
     </div>
   );
 }
