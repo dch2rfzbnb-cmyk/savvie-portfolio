@@ -39,8 +39,16 @@ export default function SilhouetteMatrixSection() {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      // Для маскированного слоя сохраняем содержимое при ресайзе
+      if (isMasked) {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        ctx.putImageData(imageData, 0, 0);
+      } else {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
     };
 
     resizeCanvas();
@@ -58,16 +66,34 @@ export default function SilhouetteMatrixSection() {
     const opacity = isMasked ? 0.9 : 0.3;
 
     let lastTime = 0;
-    const speed = 30;
+    const speed = isMasked ? 50 : 30; // Медленнее для маскированного слоя
+    const startTime = Date.now();
+    const fillDuration = 12000; // 12 секунд для заполнения
+    let isFilled = false;
 
     const draw = (timestamp: number) => {
-      if (timestamp - lastTime > speed) {
-        ctx.fillStyle = `rgba(0, 0, 0, 0.05)`;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Для заполненного маскированного слоя используем очень медленную анимацию
+      const currentSpeed = (isMasked && isFilled) ? 500 : speed;
+      
+      if (timestamp - lastTime > currentSpeed) {
+        // Для фонового слоя - обычная очистка с шлейфом
+        if (!isMasked) {
+          ctx.fillStyle = `rgba(0, 0, 0, 0.05)`;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        // Для маскированного слоя - НЕ очищаем canvas, символы накапливаются
 
         ctx.font = '15px monospace';
 
+        // Для маскированного слоя уменьшаем частоту спавна символов
+        const spawnChance = isMasked ? (isFilled ? 0.05 : 0.3) : 1.0; // После заполнения почти не спавним
+
         for (let i = 0; i < drops.length; i++) {
+          // Для маскированного слоя пропускаем некоторые колонки для контроля плотности
+          if (isMasked && Math.random() > spawnChance) {
+            continue;
+          }
+
           const text = characters.charAt(Math.floor(Math.random() * characters.length));
           const x = i * 20;
           const y = drops[i] * 20;
@@ -75,10 +101,35 @@ export default function SilhouetteMatrixSection() {
           ctx.fillStyle = isMasked ? baseColor : `rgba(22, 163, 74, ${opacity})`;
           ctx.fillText(text, x, y);
 
-          if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
+          // Для маскированного слоя - символы не исчезают, просто продолжают падать
+          if (!isMasked) {
+            // Обычное поведение для фонового слоя
+            if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+              drops[i] = 0;
+            }
+            drops[i]++;
+          } else {
+            // Для маскированного - символы падают и остаются на canvas
+            if (drops[i] * 20 > canvas.height) {
+              // После достижения низа, сбрасываем в начало для нового цикла
+              if (Math.random() > 0.98) {
+                drops[i] = 0;
+              } else {
+                drops[i]++; // Продолжаем движение вниз
+              }
+            } else {
+              drops[i]++;
+            }
           }
-          drops[i]++;
+        }
+
+        // Проверка заполнения для маскированного слоя
+        if (isMasked && !isFilled) {
+          const elapsed = Date.now() - startTime;
+          if (elapsed >= fillDuration) {
+            isFilled = true;
+            // После заполнения сильно замедляем анимацию
+          }
         }
 
         lastTime = timestamp;
