@@ -17,7 +17,7 @@ export default function Projects() {
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-2">
           {projects.map((project, i) => (
             <FadeIn key={project.title} delay={i * 150}>
-              <Card className="flex h-full flex-col bg-card/50 backdrop-blur-sm border-white/10 transition-all duration-300 glow-border hover:-translate-y-2">
+              <Card className="flex h-full flex-col bg-card/50 backdrop-blur-sm border-white/10 transition-all duration-300 glow-border md:hover:-translate-y-2 active:scale-[0.98] md:active:scale-100">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 font-mono">
                     {project.title}
