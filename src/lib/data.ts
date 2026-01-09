@@ -179,6 +179,12 @@ export const projects: Project[] = [
     tags: ['Next.js', 'Tailwind CSS', 'Firebase Studio', 'Matrix UI', 'Prompt-engineering'],
     url: '/',
   },
+  {
+    title: 'contact',
+    description: '@savviest\nopen chat',
+    tags: [],
+    url: 'https://t.me/savviest',
+  },
 ];
 
 export const stack: StackItem[] = [

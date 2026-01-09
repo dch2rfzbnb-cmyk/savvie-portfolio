@@ -18,24 +18,26 @@ export default function Projects() {
           {projects.map((project, i) => (
             <FadeIn key={project.title} delay={i * 150}>
               <Card className="flex h-full flex-col bg-card/50 backdrop-blur-sm border-white/10 transition-colors duration-200 md:glow-border md:hover:-translate-y-2 md:transition-all md:duration-300">
-                <CardHeader className="p-3 sm:p-4 md:p-6">
-                  <CardTitle className="flex items-center gap-1 sm:gap-2 font-mono text-sm sm:text-base md:text-lg">
+                <CardHeader className={`${project.title === 'contact' ? 'p-2 sm:p-3 md:p-6' : 'p-3 sm:p-4 md:p-6'}`}>
+                  <CardTitle className={`flex items-center gap-1 sm:gap-2 font-mono ${project.title === 'contact' ? 'text-xs sm:text-sm md:text-lg' : 'text-sm sm:text-base md:text-lg'}`}>
                     {project.title}
                   </CardTitle>
-                  <CardDescription className={`text-xs sm:text-sm md:text-base mt-1 sm:mt-2 ${project.title === 'this-landing' ? 'hidden md:block' : ''}`}>
+                  <CardDescription className={`${project.title === 'contact' ? 'text-[10px] sm:text-xs md:text-base mt-0.5 sm:mt-1 md:mt-2 whitespace-pre-line' : 'text-xs sm:text-sm md:text-base mt-1 sm:mt-2'} ${project.title === 'this-landing' ? 'hidden md:block' : ''}`}>
                     {project.description}
                   </CardDescription>
                 </CardHeader>
-                <div className={`px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-0 flex-grow ${project.title === 'this-landing' ? 'hidden md:block' : ''}`}>
-                  <div className="flex flex-wrap gap-1 sm:gap-2">
-                    {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="font-mono bg-primary/10 text-primary border-primary/20 text-[10px] sm:text-xs md:text-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1">
-                        {tag}
-                      </Badge>
-                    ))}
+                {project.tags.length > 0 && (
+                  <div className={`px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-0 flex-grow ${project.title === 'this-landing' ? 'hidden md:block' : ''}`}>
+                    <div className="flex flex-wrap gap-1 sm:gap-2">
+                      {project.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="font-mono bg-primary/10 text-primary border-primary/20 text-[10px] sm:text-xs md:text-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <CardFooter className="p-3 sm:p-4 md:p-6 pt-0">
+                )}
+                <CardFooter className={`${project.title === 'contact' ? 'p-2 sm:p-3 md:p-6 pt-0' : 'p-3 sm:p-4 md:p-6 pt-0'}`}>
                   {project.url && (
                      <Button asChild variant="ghost" size="sm" className="text-primary md:hover:bg-primary/10 h-8 sm:h-9 md:h-10 text-xs sm:text-sm md:text-base">
                        <Link href={project.url} target={project.url.startsWith('/') ? '_self' : '_blank'} rel="noopener noreferrer">
