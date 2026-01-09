@@ -43,8 +43,8 @@ export function FadeIn({ children, className, delay = 0 }: FadeInProps) {
     <div
       ref={ref}
       className={cn(
-        'transition-all duration-700 ease-out',
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4',
+        'transition-opacity duration-300 ease-out md:transition-all md:duration-700',
+        isVisible ? 'opacity-100 md:translate-y-0' : 'opacity-0 md:translate-y-4',
         className
       )}
       style={{ transitionDelay: `${delay}ms` }}

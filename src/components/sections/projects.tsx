@@ -14,28 +14,30 @@ export default function Projects() {
           <h2 className="font-headline text-3xl font-bold tracking-tight text-center sm:text-4xl">Проекты</h2>
         </FadeIn>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+        <div className="mt-12 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-8">
           {projects.map((project, i) => (
             <FadeIn key={project.title} delay={i * 150}>
-              <Card className="flex h-full flex-col bg-card/50 backdrop-blur-sm border-white/10 transition-all duration-300 glow-border md:hover:-translate-y-2 active:scale-[0.98] md:active:scale-100">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 font-mono">
+              <Card className="flex h-full flex-col bg-card/50 backdrop-blur-sm border-white/10 transition-colors duration-200 md:glow-border md:hover:-translate-y-2 md:transition-all md:duration-300">
+                <CardHeader className="p-3 sm:p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-1 sm:gap-2 font-mono text-sm sm:text-base md:text-lg">
                     {project.title}
                   </CardTitle>
-                  <CardDescription>{project.description}</CardDescription>
+                  <CardDescription className="text-xs sm:text-sm md:text-base mt-1 sm:mt-2">
+                    {project.description}
+                  </CardDescription>
                 </CardHeader>
-                <div className="p-6 pt-0 flex-grow">
-                  <div className="flex flex-wrap gap-2">
+                <div className="px-3 sm:px-4 md:px-6 pb-3 sm:pb-4 md:pb-6 pt-0 flex-grow">
+                  <div className="flex flex-wrap gap-1 sm:gap-2">
                     {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="font-mono bg-primary/10 text-primary border-primary/20">
+                      <Badge key={tag} variant="secondary" className="font-mono bg-primary/10 text-primary border-primary/20 text-[10px] sm:text-xs md:text-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1">
                         {tag}
                       </Badge>
                     ))}
                   </div>
                 </div>
-                <CardFooter>
+                <CardFooter className="p-3 sm:p-4 md:p-6 pt-0">
                   {project.url && (
-                     <Button asChild variant="ghost" className="text-primary hover:bg-primary/10 hover:text-primary">
+                     <Button asChild variant="ghost" size="sm" className="text-primary md:hover:bg-primary/10 h-8 sm:h-9 md:h-10 text-xs sm:text-sm md:text-base">
                        <Link href={project.url} target={project.url.startsWith('/') ? '_self' : '_blank'} rel="noopener noreferrer">
                          {project.url.startsWith('https://t.me') ? (
                            <>
