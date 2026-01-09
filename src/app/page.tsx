@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 pt-20 md:pt-0">
         <Hero activeSection={activeSection} setActiveSection={setActiveSection} />
         <div className="container mx-auto px-4 md:px-6 space-y-20 md:space-y-32">
             <About />
