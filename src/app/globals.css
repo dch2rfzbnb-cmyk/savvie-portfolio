@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 84 70% 52%; /* Lime 500 */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 250 80% 60%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 84 70% 52%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71.4% 4.1%; /* Near-black with blueish tint */
+    --foreground: 210 40% 98%;
+    --card: 224 71.4% 6.1%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 84 70% 52%; /* Lime 500 */
+    --primary-foreground: 84 70% 95%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 250 80% 60%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 84 70% 35%; /* Lime-tinted border */
+    --input: 217.2 32.6% 17.5%;
+    --ring: 84 70% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    /* bg-background is now handled by the layout wrapper for the Matrix effect */
+    @apply text-foreground;
+  }
+}
+
+@layer components {
+  .glow-border {
+    @apply relative before:absolute before:-inset-px before:rounded-[calc(var(--radius)+2px)] before:bg-gradient-to-r before:from-primary/50 before:to-accent/50 before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100;
+  }
+}
+
+@keyframes type-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+.type-cursor {
+  animation: type-cursor 1s step-end infinite;
+}
+
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-runner-path {
+    background-image:
+    linear-gradient(hsla(var(--border) / 0.2) 1px, transparent 1px),
+    linear-gradient(to right, hsla(var(--border) / 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
