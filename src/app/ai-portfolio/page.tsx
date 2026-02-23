@@ -240,7 +240,14 @@ const accordionSections: Array<{
         </div>
         <div>
           <span className="font-medium">Telegram: </span>
-          <span className="text-muted-foreground">TODO: add Telegram link</span>
+          <Link
+            href="https://t.me/savviest"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:text-primary/80 hover:underline transition-colors"
+          >
+            @savviest
+          </Link>
         </div>
       </div>
     ),
