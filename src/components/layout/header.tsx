@@ -43,6 +43,12 @@ export default function Header() {
           ))}
         </nav>
         <div className="hidden items-center gap-4 md:flex">
+          <Link
+            href="/tours-chat"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            AI‑подбор туров
+          </Link>
           <Button asChild variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary">
             <Link href={contact.telegramUrl} target="_blank" rel="noopener noreferrer">
               Open Telegram <Send className="ml-2 h-4 w-4" />
@@ -81,6 +87,13 @@ export default function Header() {
                       {link.name}
                     </Link>
                   ))}
+                  <Link
+                    href="/tours-chat"
+                    className="text-lg font-medium text-muted-foreground hover:text-primary"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    AI‑подбор туров
+                  </Link>
                 </nav>
                 <Button asChild className="mt-8 w-full bg-primary text-primary-foreground">
                   <Link href={contact.telegramUrl} target="_blank" rel="noopener noreferrer">
