@@ -5,7 +5,6 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { FadeIn } from '@/components/fade-in';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
 type ChatMessage = {
   id: number;
@@ -13,7 +12,11 @@ type ChatMessage = {
   text: string;
 };
 
-const API_URL = 'http://195.2.78.63:8000/api/search';
+// Backend base URL (eto-tours API). Set NEXT_PUBLIC_API_BASE_URL in Vercel / .env.local. Default: VPS.
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://155.212.208.92:8000';
+const API_URL = `${API_BASE_URL}/api/search`;
+const DEBUG_TOURS_JSON = process.env.NEXT_PUBLIC_DEBUG_TOURS_JSON === 'true';
 
 function renderMultiline(text: string) {
   const lines = text.split('\n');
@@ -117,6 +120,7 @@ export default function ToursChatPage() {
   ]);
   const [input, setInput] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [debugJson, setDebugJson] = useState<unknown[]>([]);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const nextIdRef = useRef(2);
 
@@ -140,6 +144,7 @@ export default function ToursChatPage() {
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsSending(true);
+    if (DEBUG_TOURS_JSON) setDebugJson([]);
 
     const payload = {
       text: trimmed,
@@ -177,6 +182,7 @@ export default function ToursChatPage() {
         replyText = 'Сервис временно недоступен, попробуйте еще раз позже.';
       } else {
         const data = (await response.json()) as { reply?: string };
+        if (DEBUG_TOURS_JSON) setDebugJson((prev) => [...prev, data]);
         replyText = data.reply?.trim() || 'Сервис временно недоступен, попробуйте еще раз позже.';
       }
 
@@ -187,12 +193,17 @@ export default function ToursChatPage() {
       };
 
       setMessages((prev) => [...prev, botMessage]);
+      if (DEBUG_TOURS_JSON) {
+        setTimeout(() => setDebugJson([]), 2000);
+      }
     } catch (error) {
-      console.error('Tours chat network/CORS error', {
-        url: API_URL,
-        payload,
-        error,
-      });
+      console.error('Tours chat network/CORS error RAW:', error);
+      if (error instanceof Error) {
+        console.error('name:', error.name);
+        console.error('message:', error.message);
+        console.error('stack:', error.stack);
+      }
+      console.error('Extra context:', { url: API_URL, payload });
 
       const botMessage: ChatMessage = {
         id: nextIdRef.current++,
@@ -271,6 +282,19 @@ export default function ToursChatPage() {
                           <div className="text-lime-400/70 animate-pulse">
                             <span className="text-emerald-400 mr-1">bot$</span>
                             думаю над маршрутами...
+                          </div>
+                        )}
+                        {DEBUG_TOURS_JSON && debugJson.length > 0 && (
+                          <div className="space-y-1 mt-2">
+                            {debugJson.map((raw, idx) => (
+                              <pre
+                                key={idx}
+                                className="text-[10px] font-mono text-lime-400/40 bg-black/60 p-2 rounded border border-lime-500/20 overflow-x-auto whitespace-pre-wrap break-words"
+                                style={{ opacity: 0.35 }}
+                              >
+                                {JSON.stringify(raw, null, 2)}
+                              </pre>
+                            ))}
                           </div>
                         )}
                         <div ref={messagesEndRef} />
