@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 
-// Server-side only. Set API_BASE_URL in Vercel/host env when using this proxy (eto-tours backend).
+// Client calls /api/tours-search over HTTPS; this route runs only on the server and calls the backend (http is OK here).
 const API_BASE_URL = process.env.API_BASE_URL || 'http://155.212.208.92:8000';
-const API_URL = `${API_BASE_URL}/api/search`;
+const url = `${API_BASE_URL}/api/search`;
 
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as { text: string; user_id?: number };
 
-    const resp = await fetch(API_URL, {
+    const resp = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

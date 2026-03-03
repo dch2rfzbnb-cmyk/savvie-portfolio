@@ -12,10 +12,8 @@ type ChatMessage = {
   text: string;
 };
 
-// Backend base URL (eto-tours API). Set NEXT_PUBLIC_API_BASE_URL in Vercel / .env.local. Default: VPS.
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://155.212.208.92:8000';
-const API_URL = `${API_BASE_URL}/api/search`;
+// Client always calls the same-origin proxy over HTTPS; the proxy (src/app/api/tours-search/route.ts) talks to the backend.
+const TOURS_SEARCH_ENDPOINT = '/api/tours-search';
 const DEBUG_TOURS_JSON = process.env.NEXT_PUBLIC_DEBUG_TOURS_JSON === 'true';
 
 function renderMultiline(text: string) {
@@ -152,7 +150,7 @@ export default function ToursChatPage() {
     };
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(TOURS_SEARCH_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +170,7 @@ export default function ToursChatPage() {
         }
 
         console.error('Tours chat request error', {
-          url: API_URL,
+          url: TOURS_SEARCH_ENDPOINT,
           payload,
           status: response.status,
           statusText: response.statusText,
@@ -203,7 +201,7 @@ export default function ToursChatPage() {
         console.error('message:', error.message);
         console.error('stack:', error.stack);
       }
-      console.error('Extra context:', { url: API_URL, payload });
+      console.error('Extra context:', { url: TOURS_SEARCH_ENDPOINT, payload });
 
       const botMessage: ChatMessage = {
         id: nextIdRef.current++,

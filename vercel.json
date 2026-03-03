@@ -1,6 +1,5 @@
 {
   "env": {
-    "NEXT_PUBLIC_API_BASE_URL": "http://155.212.208.92:8000",
     "API_BASE_URL": "http://155.212.208.92:8000"
   }
 }
